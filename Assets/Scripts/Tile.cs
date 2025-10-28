@@ -14,7 +14,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     private Board board;
 
     public State state { get; private set; }
-    public char number { get; private set; }
+    public string number { get; private set; }
     public bool changeable { get; set; } = true;
 
     private TextMeshProUGUI text;
@@ -27,7 +27,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         board = GameObject.FindGameObjectWithTag("GameBoard").GetComponent<Board>();
     }
 
-    public void setNumber(char number)
+    public void setNumber(string number)
     {
         this.number = number;
         text.text = number.ToString();
@@ -42,9 +42,9 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         // This code will execute when the UI Image is clicked
-        Debug.Log("Key was clicked");
-        
-        board.keyPressed = text.text.ToLower();
+        Debug.Log("Tile " + text.text + " was clicked");
+
+        board.currentTile = this;
         // Example: Call another function, change a variable, etc.
         // MyCustomAction(); 
     }

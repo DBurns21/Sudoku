@@ -8,6 +8,8 @@ public class Board : MonoBehaviour
     private Row[] rows;
     private Key[] keys;
 
+    public Tile currentTile { get; set; } = null;
+
     private string[] sudokus;
     private string currentSudoku;
     private string solvedSudoku;
@@ -36,6 +38,18 @@ public class Board : MonoBehaviour
         SetBoard();
     }
 
+    private void Update()
+    {
+        if (currentTile != null)
+        {
+            if (keyPressed != null && currentTile.changeable)
+            {
+                currentTile.setNumber(keyPressed);
+            }
+        }
+        keyPressed = null;
+    }
+
     private void LoadData()
     {
         TextAsset textFile = Resources.Load("sudokus") as TextAsset;
@@ -54,7 +68,7 @@ public class Board : MonoBehaviour
             {
                 if (currentSudoku[i] != '.')
                 {
-                    tile.setNumber(currentSudoku[i++]);
+                    tile.setNumber(currentSudoku[i++].ToString());
                     tile.changeable = false;
                 }
                 else
