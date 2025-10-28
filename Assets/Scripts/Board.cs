@@ -10,6 +10,7 @@ public class Board : MonoBehaviour
 
     private string[] sudokus;
     private string currentSudoku;
+    private string solvedSudoku;
 
     public string keyPressed { get; set; } = null;
 
@@ -54,6 +55,7 @@ public class Board : MonoBehaviour
                 if (currentSudoku[i] != '.')
                 {
                     tile.setNumber(currentSudoku[i++]);
+                    tile.changeable = false;
                 }
                 else
                 {
