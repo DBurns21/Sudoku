@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class Board : MonoBehaviour
 {
+    private bool solved;
 
     private Row[] rows;
     private Key[] keys;
@@ -24,7 +25,7 @@ public class Board : MonoBehaviour
     public Tile.State correctState;
 
     [Header("UI")]
-    public Button tryAgainButton;
+    public Button CheckAnswerButton;
 
     private void Awake()
     {
@@ -181,5 +182,36 @@ public class Board : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void checkSolved()
+    {
+        solved = true;
+
+        for (int i = 0; i < solvedSudoku.GetLength(0); ++i)
+        {
+            for (int j = 0; j < solvedSudoku.GetLength(1); ++j)
+            {
+                if (rows[i].tiles[j].number == null) {
+                    solved = false;
+                }
+                else if (solvedSudoku[i, j] != int.Parse(rows[i].tiles[j].number))
+                {
+                    solved = false;
+                }
+            }
+        }
+
+        /*
+        if (solved)
+        {
+            Debug.Log("This puzzle has been solved!");
+        }
+        else
+        {
+            Debug.Log("This puzzle has not been solved :(");
+        }
+        */
+        //return solved;
     }
 }

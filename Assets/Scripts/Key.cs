@@ -19,7 +19,7 @@ public class key : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         // This code will execute when the UI Image is clicked
-        Debug.Log("Key " + text.text + " was clicked");
+        //Debug.Log("Key " + text.text + " was clicked");
         if (board.currentTile != null)
         {
             board.keyPressed = text.text;
