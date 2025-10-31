@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -12,7 +13,9 @@ public class Board : MonoBehaviour
     public Tile currentTile { get; set; } = null;
 
     private string[] sudokus;
+    private string[] sudokusAnswers;
     private string currentSudoku;
+    private string currentSudokuAnswer;
     private int[,] solvedSudoku = new int[9,9];
 
     public string keyPressed { get; set; } = null;
@@ -26,6 +29,8 @@ public class Board : MonoBehaviour
 
     [Header("UI")]
     public Button CheckAnswerButton;
+    public Button NewGameButton;
+    public TextMeshProUGUI WinOrLossText;
 
     private void Awake()
     {
@@ -45,6 +50,7 @@ public class Board : MonoBehaviour
         {
             if (keyPressed != null && currentTile.changeable)
             {
+                WinOrLossText.gameObject.SetActive(false);
                 currentTile.setNumber(keyPressed);
             }
         }
@@ -55,14 +61,22 @@ public class Board : MonoBehaviour
     {
         TextAsset textFile = Resources.Load("sudokus") as TextAsset;
         sudokus = textFile.text.Split('\n');
+        //textFile = Resources.Load("sudokusAnswers") as TextAsset;
+        //sudokusAnswers = textFile.text.Split('\n');
     }
 
     private void SetBoard()
     {
-        currentSudoku = sudokus[UnityEngine.Random.Range(0, sudokus.Length)];
+        WinOrLossText.gameObject.SetActive(false);
+        int selected = UnityEngine.Random.Range(0, sudokus.Length);
+        currentSudoku = sudokus[selected];
         currentSudoku = currentSudoku.Trim();
-        currentSudoku.Replace('.', '0');
-
+        //need to go through all the sudokus and replace the '.' with '0' so I can take this line out
+        currentSudoku = currentSudoku.Replace('.', '0');
+        //currentSudokuAnswer = sudokusAnswers[selected];
+        //currentSudokuAnswer = currentSudokuAnswer.Trim();
+        //Debug.Log("current string is " + currentSudoku);
+        /*
         currentSudoku = 
             "023097600" +
             "546018279" +
@@ -73,9 +87,22 @@ public class Board : MonoBehaviour
             "012075008" +
             "968034752" +
             "475800063";
+        */
+        /*
+        currentSudoku =
+            "023597684" +
+            "546318279" +
+            "897246531" +
+            "784962315" +
+            "251783946" +
+            "639451827" +
+            "312675498" +
+            "968134752" +
+            "475829163";
+        */
 
         int curr = 0;
-
+        
         for (int j = 0; j < solvedSudoku.GetLength(0); j++)
         {
             for (int k = 0; k < solvedSudoku.GetLength(1); k++)
@@ -83,7 +110,7 @@ public class Board : MonoBehaviour
                 solvedSudoku[j, k] = currentSudoku[curr++] - '0';
             }
         }
-
+        //Debug.Log("setting up board)");
         int i = 0;
         foreach (Row row in rows)
         {
@@ -101,9 +128,14 @@ public class Board : MonoBehaviour
                 
             }
         }
-
+        /*
+        Debug.Log("Board is set up");
+        Debug.Log("starting to solve");
+        //current solver is not fast enough so you sometimes have to wait 20 - 30 seconds in order for the board to be made.
         sudokuSolver(solvedSudoku, 0, 0);
-
+        Debug.Log("Finished solving");
+        */
+        /*
         string answer = "";
 
         for (int j = 0; j < solvedSudoku.GetLength(0); j++)
@@ -113,6 +145,21 @@ public class Board : MonoBehaviour
                 answer += solvedSudoku[j,k].ToString();
             }
         }
+        */
+    }
+
+    public void newGame()
+    {
+        foreach (Row row in rows)
+        {
+            foreach (Tile tile in row.tiles)
+            {
+                tile.setNumber("");
+                tile.changeable = true;
+            }
+        }
+
+        SetBoard();
     }
 
     private bool isSafe(int[,] mat, int row, int col, int num)
@@ -184,34 +231,60 @@ public class Board : MonoBehaviour
         return false;
     }
 
+    //This should not only check to see if the game is completed but also lock in any correct answers
+    //It may also be good to change the state to show that it is a number that you had put in rather than one that you started with
+    //May also be a good idea to change the state of the incorrect numbers like making the text red or something to show it should not go there.
     public void checkSolved()
     {
         solved = true;
 
+        int curr = 0;
         for (int i = 0; i < solvedSudoku.GetLength(0); ++i)
         {
             for (int j = 0; j < solvedSudoku.GetLength(1); ++j)
             {
-                if (rows[i].tiles[j].number == null) {
+                if (rows[i].tiles[j].number == null)
+                {
                     solved = false;
                 }
-                else if (solvedSudoku[i, j] != int.Parse(rows[i].tiles[j].number))
+                else if (rows[i].tiles[j].number == currentSudokuAnswer[curr++].ToString())
                 {
                     solved = false;
                 }
             }
         }
 
-        /*
+                /*
+                for (int i = 0; i < solvedSudoku.GetLength(0); ++i)
+                {
+                    for (int j = 0; j < solvedSudoku.GetLength(1); ++j)
+                    {
+                        if (rows[i].tiles[j].number == null) {
+                            solved = false;
+                        }
+                        else if (solvedSudoku[i, j] != int.Parse(rows[i].tiles[j].number))
+                        {
+                            solved = false;
+                        }
+                    }
+                }
+                */
+
         if (solved)
         {
-            Debug.Log("This puzzle has been solved!");
+            WinOrLossText.text = ("Congrats you solved the puzzle!");
+            WinOrLossText.color = Color.green;
+            WinOrLossText.gameObject.SetActive(true);
+            //Debug.Log("This puzzle has been solved!");
         }
         else
         {
-            Debug.Log("This puzzle has not been solved :(");
+            WinOrLossText.text = ("I'm sorry but this puzzle is incorrect. :'(");
+            WinOrLossText.color = Color.red;
+            WinOrLossText.gameObject.SetActive(true);
+            //Debug.Log("This puzzle has not been solved :(");
         }
-        */
+        
         //return solved;
     }
 }
