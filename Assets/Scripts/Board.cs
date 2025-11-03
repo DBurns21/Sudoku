@@ -21,6 +21,7 @@ public class Board : MonoBehaviour
     public string keyPressed { get; set; } = null;
 
     [Header("Tile States")]
+    public Tile.State hintState;
     public Tile.State emptyState;
     public Tile.State selectedState;
     public Tile.State sameNumberState;
@@ -131,9 +132,11 @@ public class Board : MonoBehaviour
                 {
                     tile.setNumber(currentSudoku[i++].ToString());
                     tile.changeable = false;
+                    tile.SetState(hintState);
                 }
                 else
                 {
+                    tile.SetState(emptyState);
                     i++;
                 }
                 
@@ -167,6 +170,7 @@ public class Board : MonoBehaviour
             {
                 tile.setNumber("");
                 tile.changeable = true;
+                tile.SetState(emptyState);
             }
         }
 
@@ -254,13 +258,21 @@ public class Board : MonoBehaviour
         {
             for (int j = 0; j < solvedSudoku.GetLength(1); ++j)
             {
-                if (rows[i].tiles[j].number == null)
+                if (rows[i].tiles[j].changeable == true)
                 {
-                    solved = false;
-                }
-                else if (rows[i].tiles[j].number != currentSudokuAnswer[curr++].ToString())
-                {
-                    solved = false;
+                    if (rows[i].tiles[j].number == null)
+                    {
+                        solved = false;
+                    }
+                    else if (rows[i].tiles[j].number != currentSudokuAnswer[curr++].ToString())
+                    {
+                        rows[i].tiles[j].SetState(incorrectState);
+                        solved = false;
+                    }
+                    else
+                    {
+                        rows[i].tiles[j].SetState(correctState);
+                    }
                 }
             }
         }

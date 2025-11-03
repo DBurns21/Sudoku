@@ -9,6 +9,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     public class State
     {
         public Color fillColor;
+        public Color textColor;
     }
 
     private Board board;
@@ -37,6 +38,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     {
         this.state = state;
         fill.color = state.fillColor;
+        text.color = state.textColor;
     }
 
     public void OnPointerClick(PointerEventData eventData)
