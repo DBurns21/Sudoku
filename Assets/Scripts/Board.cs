@@ -61,8 +61,8 @@ public class Board : MonoBehaviour
     {
         TextAsset textFile = Resources.Load("sudokus") as TextAsset;
         sudokus = textFile.text.Split('\n');
-        //textFile = Resources.Load("sudokusAnswers") as TextAsset;
-        //sudokusAnswers = textFile.text.Split('\n');
+        textFile = Resources.Load("sudokusAnswers") as TextAsset;
+        sudokusAnswers = textFile.text.Split('\n');
     }
 
     private void SetBoard()
@@ -73,8 +73,19 @@ public class Board : MonoBehaviour
         currentSudoku = currentSudoku.Trim();
         //need to go through all the sudokus and replace the '.' with '0' so I can take this line out
         currentSudoku = currentSudoku.Replace('.', '0');
-        //currentSudokuAnswer = sudokusAnswers[selected];
-        //currentSudokuAnswer = currentSudokuAnswer.Trim();
+        currentSudokuAnswer = sudokusAnswers[selected];
+        currentSudokuAnswer = currentSudokuAnswer.Trim();
+        Debug.Log("Length of answer is " + currentSudokuAnswer.Length);
+        Debug.Log("Current answer:\n" +
+            currentSudokuAnswer[..9] + "\n" +
+            currentSudokuAnswer[9..18] + "\n" +
+            currentSudokuAnswer.Substring(18, 9) + "\n" +
+            currentSudokuAnswer.Substring(27, 9) + "\n" +
+            currentSudokuAnswer.Substring(36, 9) + "\n" +
+            currentSudokuAnswer.Substring(45, 9) + "\n" +
+            currentSudokuAnswer.Substring(54, 9) + "\n" +
+            currentSudokuAnswer.Substring(63, 9) + "\n" +
+            currentSudokuAnswer[72..]);
         //Debug.Log("current string is " + currentSudoku);
         /*
         currentSudoku = 
@@ -247,7 +258,7 @@ public class Board : MonoBehaviour
                 {
                     solved = false;
                 }
-                else if (rows[i].tiles[j].number == currentSudokuAnswer[curr++].ToString())
+                else if (rows[i].tiles[j].number != currentSudokuAnswer[curr++].ToString())
                 {
                     solved = false;
                 }
