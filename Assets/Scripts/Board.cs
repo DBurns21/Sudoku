@@ -50,7 +50,7 @@ public class Board : MonoBehaviour
     {
         if (currentTile != null)
         {
-            if (keyPressed != null && currentTile.changeable)
+            if (keyPressed != null && currentTile.isChangeble())
             {
                 WinOrLossText.gameObject.SetActive(false);
                 currentTile.setNumber(keyPressed);
@@ -132,7 +132,6 @@ public class Board : MonoBehaviour
                 if (currentSudoku[i] != '0')
                 {
                     tile.setNumber(currentSudoku[i++].ToString());
-                    tile.changeable = false;
                     tile.SetState(hintState);
                 }
                 else
@@ -170,7 +169,6 @@ public class Board : MonoBehaviour
             foreach (Tile tile in row.tiles)
             {
                 tile.setNumber("");
-                tile.changeable = true;
                 tile.SetState(emptyState);
             }
         }
@@ -259,7 +257,7 @@ public class Board : MonoBehaviour
         {
             for (int j = 0; j < solvedSudoku.GetLength(1); ++j)
             {
-                if (rows[i].tiles[j].changeable == true)
+                if (rows[i].tiles[j].isChangeble())
                 {
                     if (rows[i].tiles[j].number == null)
                     {
