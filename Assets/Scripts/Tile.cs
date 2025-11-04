@@ -10,13 +10,14 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     {
         public Color fillColor;
         public Color textColor;
+        public bool changeable;
     }
 
     private Board board;
 
     public State state { get; private set; }
     public string number { get; private set; }
-    public bool changeable { get; set; } = true;
+    private bool changeable;
 
     private TextMeshProUGUI text;
     private Image fill;
@@ -39,6 +40,8 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         this.state = state;
         fill.color = state.fillColor;
         text.color = state.textColor;
+        changeable = state.changeable;
+        
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -49,5 +52,10 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         board.currentTile = this;
         // Example: Call another function, change a variable, etc.
         // MyCustomAction(); 
+    }
+
+    public bool isChangeble()
+    {
+        return changeable;
     }
 }

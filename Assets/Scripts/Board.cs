@@ -16,6 +16,7 @@ public class Board : MonoBehaviour
     private string[] sudokusAnswers;
     private string currentSudoku;
     private string currentSudokuAnswer;
+    //solvedSudoku no longer gets used since we use currentSudokuAnswer so either we need to remove one and make sure only one exists.
     private int[,] solvedSudoku = new int[9,9];
 
     public string keyPressed { get; set; } = null;
@@ -264,16 +265,17 @@ public class Board : MonoBehaviour
                     {
                         solved = false;
                     }
-                    else if (rows[i].tiles[j].number != currentSudokuAnswer[curr++].ToString())
+                    else if (rows[i].tiles[j].number != currentSudokuAnswer[curr].ToString())
                     {
                         rows[i].tiles[j].SetState(incorrectState);
                         solved = false;
                     }
-                    else
+                    else if (rows[i].tiles[j].number == currentSudokuAnswer[curr].ToString())
                     {
                         rows[i].tiles[j].SetState(correctState);
                     }
                 }
+                curr++;
             }
         }
 

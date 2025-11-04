@@ -3883,16 +3883,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aa5529a378c97145b8726eed42f70e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  hintState:
+    fillColor: {r: 1, g: 1, b: 1, a: 1}
+    textColor: {r: 0, g: 0, b: 0, a: 1}
   emptyState:
-    fillColor: {r: 0, g: 0, b: 0, a: 0}
+    fillColor: {r: 1, g: 1, b: 1, a: 1}
+    textColor: {r: 0, g: 0, b: 0, a: 1}
   selectedState:
-    fillColor: {r: 0, g: 0, b: 0, a: 0}
+    fillColor: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
+    textColor: {r: 0, g: 0, b: 0, a: 1}
   sameNumberState:
-    fillColor: {r: 0, g: 0, b: 0, a: 0}
+    fillColor: {r: 0.43529415, g: 0.43529415, b: 0.43529415, a: 1}
+    textColor: {r: 0, g: 0, b: 0, a: 1}
   incorrectState:
-    fillColor: {r: 0, g: 0, b: 0, a: 0}
+    fillColor: {r: 1, g: 1, b: 1, a: 1}
+    textColor: {r: 1, g: 0, b: 0, a: 1}
   correctState:
-    fillColor: {r: 0, g: 0, b: 0, a: 0}
+    fillColor: {r: 1, g: 1, b: 1, a: 1}
+    textColor: {r: 0.18396229, g: 0.39659786, b: 1, a: 1}
   CheckAnswerButton: {fileID: 1099551678}
   NewGameButton: {fileID: 840590121}
   WinOrLossText: {fileID: 546919349}
