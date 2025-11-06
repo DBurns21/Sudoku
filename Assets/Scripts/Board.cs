@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -23,11 +24,14 @@ public class Board : MonoBehaviour
 
     [Header("Tile States")]
     public Tile.State hintState;
+    public Tile.State selectedHintState;
     public Tile.State emptyState;
-    public Tile.State selectedState;
+    public Tile.State SelectedEmptyState;
     public Tile.State sameNumberState;
     public Tile.State incorrectState;
+    public Tile.State selectedIncorrectState;
     public Tile.State correctState;
+    public Tile.State selectedCorrectState;
 
     [Header("UI")]
     public Button CheckAnswerButton;
@@ -53,6 +57,10 @@ public class Board : MonoBehaviour
             {
                 WinOrLossText.gameObject.SetActive(false);
                 currentTile.setNumber(keyPressed);
+                if (currentTile.state == incorrectState)
+                {
+                    currentTile.SetState(emptyState);
+                }
             }
         }
         keyPressed = null;
@@ -75,7 +83,6 @@ public class Board : MonoBehaviour
         currentSudokuAnswer = sudokusAnswers[selected];
         currentSudokuAnswer = currentSudokuAnswer.Trim();
 
-        Debug.Log("Length of answer is " + currentSudokuAnswer.Length);
         Debug.Log("Current answer:\n" +
             currentSudokuAnswer[..9] + "\n" +
             currentSudokuAnswer[9..18] + "\n" +
@@ -306,5 +313,52 @@ public class Board : MonoBehaviour
         }
         
         //return solved;
+    }
+
+    public void selectTile(Tile t)
+    {
+        if (currentTile != null)
+        {
+            if (currentTile.state == selectedHintState)
+            {
+                currentTile.SetState(hintState);
+            }
+            else if (currentTile.state == selectedHintState)
+            {
+                currentTile.SetState(hintState);
+            }
+            else if (currentTile.state == selectedCorrectState)
+            {
+                currentTile.SetState(correctState);
+            }
+            else if (currentTile.state == selectedIncorrectState)
+            {
+                currentTile.SetState(incorrectState);
+            }
+            else if (currentTile.state == SelectedEmptyState)
+            {
+                currentTile.SetState(emptyState);
+            }
+        }
+
+            currentTile = t;
+
+        if (currentTile.state == emptyState)
+        {
+            currentTile.SetState(SelectedEmptyState);
+        }
+        else if (currentTile.state == hintState)
+        {
+            currentTile.SetState(selectedHintState);
+        }
+        else if (currentTile.state == correctState)
+        {
+            currentTile.SetState(selectedCorrectState);
+        }
+        else if (currentTile.state == incorrectState)
+        {
+            currentTile.SetState(selectedIncorrectState);
+        }
+        
     }
 }

@@ -46,12 +46,8 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        // This code will execute when the UI Image is clicked
         //Debug.Log("Tile " + text.text + " was clicked");
-
-        board.currentTile = this;
-        // Example: Call another function, change a variable, etc.
-        // MyCustomAction(); 
+        board.selectTile(this); 
     }
 
     public bool isChangeble()
