@@ -37,7 +37,6 @@ public class Board : MonoBehaviour
     private void Awake()
     {
         rows = GetComponentsInChildren<Row>();
-        //keys = GameObject.FindGameObjectWithTag("Keyboard").GetComponentsInChildren<Key>();
     }
 
     private void Start()
@@ -73,10 +72,9 @@ public class Board : MonoBehaviour
         int selected = UnityEngine.Random.Range(0, sudokus.Length);
         currentSudoku = sudokus[selected];
         currentSudoku = currentSudoku.Trim();
-        //need to go through all the sudokus and replace the '.' with '0' so I can take this line out
-        currentSudoku = currentSudoku.Replace('.', '0');
         currentSudokuAnswer = sudokusAnswers[selected];
         currentSudokuAnswer = currentSudokuAnswer.Trim();
+
         Debug.Log("Length of answer is " + currentSudokuAnswer.Length);
         Debug.Log("Current answer:\n" +
             currentSudokuAnswer[..9] + "\n" +
@@ -88,7 +86,6 @@ public class Board : MonoBehaviour
             currentSudokuAnswer.Substring(54, 9) + "\n" +
             currentSudokuAnswer.Substring(63, 9) + "\n" +
             currentSudokuAnswer[72..]);
-        //Debug.Log("current string is " + currentSudoku);
         /*
         currentSudoku = 
             "023097600" +
@@ -145,7 +142,7 @@ public class Board : MonoBehaviour
         /*
         Debug.Log("Board is set up");
         Debug.Log("starting to solve");
-        //current solver is not fast enough so you sometimes have to wait 20 - 30 seconds in order for the board to be made.
+        //current solver is not fast enough so you sometimes have to wait 20 - 60 seconds in order for the board to be made.
         sudokuSolver(solvedSudoku, 0, 0);
         Debug.Log("Finished solving");
         */
