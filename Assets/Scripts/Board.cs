@@ -61,6 +61,10 @@ public class Board : MonoBehaviour
                 {
                     currentTile.SetState(emptyState);
                 }
+                else if (currentTile.state == selectedIncorrectState)
+                {
+                    currentTile.SetState(SelectedEmptyState);
+                }
             }
         }
         keyPressed = null;
